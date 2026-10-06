@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Title;
@@ -18,6 +19,9 @@ class CreatePost extends Component
     #[Validate("required", message: "本文は必須です")]
     public $body = "";
 
+    #[Validate('required|exists:categories,id')]
+    public $category_id = "";
+
     public function save(){
         $this->validate();
 
@@ -25,6 +29,7 @@ class CreatePost extends Component
             'title' => $this->title,
             'body' => $this->body,
             'user_id' => Auth::id(),
+            'category_id' => $this->category_id
         ]);
 
         $this->reset(['title', 'body']);
@@ -35,6 +40,10 @@ class CreatePost extends Component
 
     public function render()
     {
-        return view('livewire.create-post');
+        $categories = Category::all();
+
+        return view('livewire.create-post',[
+            'categories' => $categories,
+        ]);
     }
 }

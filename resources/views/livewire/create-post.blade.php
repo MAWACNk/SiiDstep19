@@ -7,6 +7,15 @@
         </div>
     @endif
 
+    <select wire:model="category_id">
+        <option value="">カテゴリを選択してください</option>
+        @foreach ($categories as $category)
+            <option value="{{ $category->id }}">
+                {{ $category->name }}
+            </option>
+        @endforeach
+    </select>
+
     <form wire:submit="save" class="space-y-6">
         <flux:input wire:model="title" label="タイトル" placeholder="記事のタイトルを入力" />
         <flux:textarea wire:model="body" label="本文" rows="5" placeholder="本文を入力" />

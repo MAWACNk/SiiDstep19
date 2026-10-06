@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
@@ -17,6 +18,9 @@ class EditPost extends Component
     #[Validate('required')]
     public $body = '';
 
+    #[Validate('required|exists:categories,id')]
+    public $category_id = "";
+
     public function mount(Post $post) {
         if($post->user_id !== Auth::id()){
             abort(403);
@@ -25,6 +29,7 @@ class EditPost extends Component
         $this->post = $post;
         $this->title = $post->title;
         $this->body = $post->body;
+        $this->category_id = $post->category_id;
     }
     
     public function update(){
@@ -36,7 +41,8 @@ class EditPost extends Component
 
         $this->post->update([
             'title' => $this->title,
-            'body' =>$this->body,
+            'body' => $this->body,
+            'category_id' => $this->category_id,
         ]);
         session()->flash('status','記事を更新しました。');
 
@@ -45,6 +51,10 @@ class EditPost extends Component
 
     public function render()
     {
-        return view('livewire.edit-post');
+        $categories = Category::all();
+
+        return view('livewire.edit-post', [
+            'categories' => $categories,
+        ]);
     }
 }

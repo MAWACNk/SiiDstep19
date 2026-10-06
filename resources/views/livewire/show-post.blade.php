@@ -15,6 +15,10 @@
                 <flux:icon.calendar class="w-4 h-4" />
                 <span>{{ $post->created_at->format('y/m/d') }}</span>
             </div>
+            <div class="flex items-center gap-1">
+                <flux:icon.calendar class="w-4 h-4" />
+                <span>{{ $post->category->name }}</span>
+            </div>
         </div>
     </div>
 

@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Category;
 use App\Models\Post;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -17,18 +18,32 @@ class ShowPosts extends Component
 
     #[Url]
     public $search = "";
+    public $category_id = "";
 
     public function updatedSearch(){
         $this->resetPage();
     }
+
+    public function updatedCategoryId()
+    {
+        $this->resetPage();
+    }
+    
     public function render()
     {
-        $posts = Post::with('user')
+        $categories = Category::all();
+
+        $posts = Post::with(['user', 'category'])
         ->where('title','like', '%' . $this->search . "%")
+        ->when($this->category_id, function($query) {
+            $query->where('category_id', $this->category_id);
+        })
         ->latest()
         ->paginate(10);
+
         return view('livewire.show-posts',[
-            'posts' => $posts
+            'posts' => $posts,
+            'categories' => $categories,
         ]);
     }
 }
