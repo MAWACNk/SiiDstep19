@@ -15,7 +15,7 @@ class MyPosts extends Component
     #[Url]
     public $search = "";
 
-    public function updateSearch(){
+    public function updatedSearch(){
         $this->resetPage();
     }
 

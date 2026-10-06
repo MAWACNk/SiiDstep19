@@ -4,7 +4,7 @@
     <form wire:submit="update" class="space-y-6">
         <flux:input wire:model="title" label="タイトル" placeholder="記事のタイトルを入力" />
         <flux:textarea wire:model="body" label="本文" rows="5" placeholder="本文を入力" />
-        <div class="flex justify-end gap-5">
+        <div class="flex justify-end gap-5 ml-2">
             <flux:button href="{{ route('my-posts') }}" wire:navigate>
                 キャンセル
             </flux:button>

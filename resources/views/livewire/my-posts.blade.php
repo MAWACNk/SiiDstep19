@@ -5,7 +5,7 @@
         <flux:input wire:model.live="search" icon="magnifying-glass" class="w-64" placeholder="タイトルで検索" />
         
         @auth
-            <flux:button href="{{ route('posts.create') }}" wire:negative variant="primary">
+            <flux:button href="{{ route('posts.create') }}" wire:navigate variant="primary">
                 新規作成
             </flux:button>
         @endauth
@@ -24,7 +24,7 @@
                 <div class="flex items-center gap-2 shrink-0 mt-2">
                     <flux:button 
                     href="posts/{{ $post->id }}/edit"
-                    write:navigate
+                    wire:navigate
                     icon="pencil-square"
                     size="sm"
                     >編集</flux:button>
@@ -35,7 +35,7 @@
                     variant="danger"
                     icon="trash"
                     size="sm"
-                    >編集</flux:button>
+                    >削除</flux:button>
                 </div>
             </article>
         @endforeach
